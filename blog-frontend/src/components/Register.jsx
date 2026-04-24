@@ -14,7 +14,7 @@ import { useForm } from "react-hook-form";
 import { NavLink, useNavigate } from "react-router";
 import { useState } from "react";
 import axios from "axios";
-
+import { useEffect } from "react";
 function Register() {
   const {
     register,

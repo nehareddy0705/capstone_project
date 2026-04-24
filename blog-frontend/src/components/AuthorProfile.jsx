@@ -1,6 +1,6 @@
 import { NavLink, Outlet, useNavigate } from "react-router";
 import { useAuth } from "../store/authStore";
-
+import { useEffect } from "react";
 import { pageWrapper, navLinkClass, divider } from "../styles/common";
 
 function AuthorProfile() {

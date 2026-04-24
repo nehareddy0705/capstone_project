@@ -8,7 +8,7 @@ import {
   navLinkClass,
   navLinkActiveClass,
 } from "../styles/common";
-
+import { useEffect } from "react";
 function Header() {
   const isAuthenticated = useAuth((state) => state.isAuthenticated);
   const user = useAuth((state) => state.currentUser);
