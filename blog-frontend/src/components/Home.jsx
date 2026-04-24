@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 // src/components/Home.jsx
 
 const BASE_URL = "https://capstone-project-blog-app-0eap.onrender.com";
