@@ -85,7 +85,7 @@ commonApp.post("/login", async (req, res) => {
     },
     process.env.SECRET_KEY,
     {
-      expiresIn: "1h",
+      expiresIn: "10h",
     },
   );
 
@@ -123,13 +123,55 @@ commonApp.get("/check-auth", verifyToken("USER", "AUTHOR", "ADMIN"), (req, res) 
   });
 });
 
-//Change password
-commonApp.put("/password", verifyToken("USER", "AUTHOR", "ADMIN"), async (req, res) => {
-  //check current password and new password are same
-  //get current password of user/admin/author
-  //check the current password of req and user are not same
-  // hash new password
-  //replace current password of user with hashed new password
-  //save
-  //send res
-});
+const bcrypt = require("bcrypt");
+
+// Change password
+commonApp.put(
+  "/password",
+  verifyToken("USER", "AUTHOR", "ADMIN"),
+  async (req, res) => {
+    try {
+      const { currentPassword, newPassword } = req.body;
+
+      // Get logged-in user from token
+      const user = req.user;
+
+      // Check if current and new password are same
+      if (currentPassword === newPassword) {
+        return res.status(400).send({
+          message: "New password cannot be same as current password",
+        });
+      }
+
+      // Compare current password with stored hashed password
+      const isMatch = await bcrypt.compare(
+        currentPassword,
+        user.password
+      );
+
+      if (!isMatch) {
+        return res.status(400).send({
+          message: "Current password is incorrect",
+        });
+      }
+
+      // Hash new password
+      const hashedPassword = await bcrypt.hash(newPassword, 10);
+
+      // Update password
+      user.password = hashedPassword;
+
+      // Save user
+      await user.save();
+
+      res.send({
+        message: "Password changed successfully",
+      });
+    } catch (error) {
+      res.status(500).send({
+        message: "Error changing password",
+        error: error.message,
+      });
+    }
+  }
+);

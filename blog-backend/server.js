@@ -13,11 +13,7 @@ config();
 const app = exp();
 //enable cors for deployed frontend and local dev
 app.use(cors({
-  origin: [
-    'https://your-frontend.onrender.com', // <-- replace with your actual deployed frontend URL
-    'http://localhost:5000',
-    'http://localhost:5001'
-  ],
+  origin: "https://blognestt.vercel.app",
   credentials: true
 }))
 //add cookie parser middeleware
