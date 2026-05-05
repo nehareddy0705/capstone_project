@@ -3,6 +3,7 @@ import axios from "axios";
 import { useNavigate } from "react-router";
 import { useAuth } from "../store/authStore";
 
+
 import {
   articleCardClass,
   articleTitle,
@@ -15,6 +16,8 @@ import {
   articleStatusActive,
   articleStatusDeleted,
 } from "../styles/common";
+
+const BASE_URL = import.meta.env.VITE_API_URL;
 
 function AuthorArticles() {
   const navigate = useNavigate();
@@ -33,7 +36,7 @@ function AuthorArticles() {
       try {
         setLoading(true);
         //read articles of current author
-        let res = await axios.get(" http://localhost:4000/author-api/articles", { withCredentials: true });
+        let res = await axios.get(`${BASE_URL}/author-api/articles`, { withCredentials: true });
         if (res.status === 200) {
           setArticles(res.data.payload);
         }

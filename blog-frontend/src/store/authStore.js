@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import axios from "axios";
+const BASE_URL = import.meta.env.VITE_API_URL;
 
 export const useAuth = create((set) => ({
   currentUser: null,
@@ -12,7 +13,7 @@ export const useAuth = create((set) => ({
       //set loading true
       set({ loading: true, currentUser: null, isAuthenticated: false, error: null });
       //make api call
-      let res = await axios.post("http://localhost:5000/auth/login", userCred, { withCredentials: true });
+      let res = await axios.post(`${BASE_URL}/auth/login`, userCred, { withCredentials: true });
       //update state
       if (res.status === 200) {
         set({
@@ -37,7 +38,7 @@ export const useAuth = create((set) => ({
     try {
       //set loading state
       //make logout api req
-      let res = await axios.get("http://localhost:5000/auth/logout", { withCredentials: true });
+      let res = await axios.get(`${BASE_URL}/auth/logout`, { withCredentials: true });
       //update state
       if (res.status === 200) {
         set({
@@ -60,7 +61,7 @@ export const useAuth = create((set) => ({
   checkAuth: async () => {
     try {
       set({ loading: true });
-      const res = await axios.get("http://localhost:5000/auth/check-auth", { withCredentials: true });
+      const res = await axios.get(`${BASE_URL}/auth/check-auth`, { withCredentials: true });
 
       set({
         currentUser: res.data.payload,

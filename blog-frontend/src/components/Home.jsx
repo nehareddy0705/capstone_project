@@ -1,10 +1,11 @@
 import React, { useEffect } from 'react';
 
-const BASE_URL = "https://capstone-project-blog-app-0eap.onrender.com";
+const BASE_URL = import.meta.env.VITE_API_URL;
+
 
 function Home() {
   useEffect(() => {
-    fetch(`${BASE_URL}/api/posts`)
+    fetch(`${BASE_URL}/author-api/articles`)
       .then(res => res.json())
       .then(data => console.log(data));
   }, []);

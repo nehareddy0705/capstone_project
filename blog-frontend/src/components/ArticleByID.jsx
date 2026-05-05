@@ -28,6 +28,8 @@ import {
 } from "../styles/common.js";
 import { useForm } from "react-hook-form";
 
+const BASE_URL = import.meta.env.VITE_API_URL;
+
 function ArticleByID() {
   const { id } = useParams();
   const location = useLocation();
@@ -50,7 +52,7 @@ function ArticleByID() {
       setLoading(true);
 
       try {
-        const res = await axios.get(`http://localhost:4000/user-api/article/${id}`, { withCredentials: true });
+        const res = await axios.get(`${BASE_URL}/user-api/article/${id}`, { withCredentials: true });
 
         setArticle(res.data.payload);
       } catch (err) {
@@ -80,7 +82,7 @@ function ArticleByID() {
 
     try {
       const res = await axios.patch(
-        "http://localhost:4000/author-api/articles",
+        `${BASE_URL}/articles`,
         { articleId: article._id, isArticleActive: newStatus },
         { withCredentials: true },
       );
@@ -114,7 +116,7 @@ function ArticleByID() {
     //add artcileId
     commentObj.articleId = article._id;
     console.log(commentObj);
-    let res = await axios.put("http://localhost:4000/user-api/articles", commentObj, { withCredentials: true });
+    let res = await axios.put(`${BASE_URL}/author-api/articles`, commentObj, { withCredentials: true });
     if (res.status === 200) {
       
       setArticle(res.data.payload);
