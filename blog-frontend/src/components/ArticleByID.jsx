@@ -52,7 +52,7 @@ function ArticleByID() {
       setLoading(true);
 
       try {
-        const res = await axios.get(`${BASE_URL}/user-api/article/${id}`, { withCredentials: true });
+        const res = await axios.get(`${BASE_URL}/user-api/articles/${id}`, { withCredentials: true });
 
         setArticle(res.data.payload);
       } catch (err) {
@@ -116,7 +116,7 @@ function ArticleByID() {
     //add artcileId
     commentObj.articleId = article._id;
     console.log(commentObj);
-    let res = await axios.put(`${BASE_URL}/author-api/articles`, commentObj, { withCredentials: true });
+    let res = await axios.put(`${BASE_URL}/user-api/articles`, commentObj, { withCredentials: true });
     if (res.status === 200) {
       
       setArticle(res.data.payload);
