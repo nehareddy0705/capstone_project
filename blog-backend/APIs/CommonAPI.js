@@ -123,8 +123,6 @@ commonApp.get("/check-auth", verifyToken("USER", "AUTHOR", "ADMIN"), (req, res) 
   });
 });
 
-const bcrypt = require("bcrypt");
-
 // Change password
 commonApp.put(
   "/password",

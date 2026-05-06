@@ -21,7 +21,7 @@ userApp.put("/articles", verifyToken("USER"), async (req, res) => {
                            .populate("comments.user");
 
   console.log(articleDocument);
-  //if article nbot found
+  //if article not found
   if (!articleDocument) {
     return res.status(404).json({ message: "Article not found" });
   }
