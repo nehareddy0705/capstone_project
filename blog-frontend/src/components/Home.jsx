@@ -45,41 +45,64 @@ function Home(){
   };
 
   if (loading) {
-      return <p className={loadingClass}>Loading articles...</p>;
-    }
+    return <p className={loadingClass}>Loading articles...</p>;
+  }
+
   return (
-    <div>
+    <main className="bg-white min-h-screen">
+      {/* HERO SECTION */}
+      <section className="max-w-5xl mx-auto px-6 pt-16 pb-10 text-center">
+        <h1 className="text-5xl font-bold text-[#1d1d1f] tracking-tight leading-tight mb-3">Welcome to MyBlog</h1>
+        <p className="text-lg text-[#6e6e73] max-w-2xl mx-auto mb-7">Discover, read, and share insightful articles from authors around the world. Dive into trending topics, personal stories, and expert advice—all in one place.</p>
+        <div className="flex justify-center gap-4 mb-2">
+          <button className="bg-[#0066cc] text-white font-semibold px-6 py-2 rounded-full hover:bg-[#004499] transition-colors text-base shadow-sm" onClick={() => window.scrollTo({top: 400, behavior: 'smooth'})}>Browse Articles</button>
+          <button className="border border-[#d2d2d7] text-[#1d1d1f] font-medium px-6 py-2 rounded-full hover:bg-[#f5f5f7] transition-colors text-base" onClick={() => navigate('/register')}>Join Now</button>
+        </div>
+      </section>
+
       {/* ARTICLES SECTION */}
-          <div className="mt-4">
-            <h3 className="text-lg font-semibold text-[#1d1d1f] mb-4">Latest Articles</h3>
-            {/* EMPTY STATE */}
-            {articles.length === 0 ? (
-              <p className="text-[#a1a1a6] text-sm text-center py-10">No articles available yet</p>
-            ) : (
-              <div className={articleGrid}>
-                {articles.map((articleObj) => (
-                  <div className={articleCardClass} key={articleObj._id}>
-                    <div className="flex flex-col h-full">
-                      {/* TOP */}
-                      <div>
-                        <p className={articleTitle}>{articleObj.title}</p>
-    
-                        <p className="text-sm text-[#6e6e73] mt-1">{articleObj.content.slice(0, 80)}...</p>
-    
-                        <p className={`${timestampClass} mt-2`}>{formatDateIST(articleObj.createdAt)}</p>
-                      </div>
-    
-                      {/* ACTION */}
-                      <button className={`${ghostBtn} mt-auto pt-4`} onClick={() => navigateToArticleByID(articleObj)}>
-                        Read Article →
-                      </button>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            )}
+      <section className="max-w-5xl mx-auto px-6 pb-16">
+        <h2 className="text-2xl font-bold text-[#1d1d1f] mb-6 text-left">Latest Articles</h2>
+        {/* ERROR STATE */}
+        {error && (
+          <div className="bg-[#ff3b30]/6 text-[#cc2f26] border border-[#ff3b30]/18 rounded-xl px-4 py-3 text-sm mb-8 text-center">
+            {error}
           </div>
-      </div>
+        )}
+        {/* EMPTY STATE */}
+        {articles.length === 0 ? (
+          <div className="text-center text-[#a1a1a6] py-16 text-base">No articles available yet. Be the first to write one!</div>
+        ) : (
+          <div className={articleGrid}>
+            {articles.map((articleObj) => (
+              <div
+                className={articleCardClass + " group relative flex flex-col h-full border border-[#e8e8ed] hover:shadow-lg transition-shadow"}
+                key={articleObj._id}
+                onClick={() => navigateToArticleByID(articleObj)}
+                style={{ cursor: "pointer" }}
+              >
+                <div className="flex flex-col h-full">
+                  {/* Article Title */}
+                  <p className={articleTitle + " text-lg group-hover:text-[#0066cc] transition-colors mb-1"}>{articleObj.title}</p>
+                  {/* Excerpt */}
+                  <p className={articleExcerpt + " mb-2"}>{articleObj.content.slice(0, 100)}...</p>
+                  {/* Meta */}
+                  <div className="flex items-center justify-between mt-auto pt-2">
+                    <span className={timestampClass}>{formatDateIST(articleObj.createdAt)}</span>
+                    <button
+                      className={ghostBtn + " text-xs px-2 py-1 rounded-full border border-[#e8e8ed] hover:bg-[#e8e8ed] transition-colors"}
+                      onClick={e => { e.stopPropagation(); navigateToArticleByID(articleObj); }}
+                    >
+                      Read →
+                    </button>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+      </section>
+    </main>
   );
 }
 

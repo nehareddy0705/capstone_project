@@ -8,7 +8,7 @@ function AuthorProfile() {
   const logout = useAuth((state) => state.logout);
   const navigate = useNavigate();
 
-  //call t6his function on logout
+  //call this function on logout
   const onLogout = async () => {
     //call login route
     await logout();
