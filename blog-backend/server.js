@@ -7,6 +7,7 @@ import { adminApp } from "./APIs/AdminAPI.js";
 import { commonApp } from "./APIs/CommonAPI.js";
 import cookieParser from "cookie-parser";
 import cors from 'cors'
+import { UserModel } from "./models/UserModel.js";
 config();
 
 //create express app
@@ -40,6 +41,34 @@ const connectDB = async () => {
 };
 
 connectDB();
+
+//credential of admin
+const createAdmin = async () => {
+  try {
+    const adminExists = await UserModel.findOne({
+      email: "ravi@gmail.com"
+    });
+
+    if (adminExists) {
+      console.log("Admin already exists");
+      return;
+    }
+
+    const hashedPassword = await hash("ravi", 10);
+
+    await UserModel.create({
+      firstName : "Ravi",
+      email: "ravi@gmail.com",
+      password: hashedPassword,
+      role: "ADMIN"
+    });
+
+    console.log("Admin created successfully");
+  } catch (error) {
+    console.log(error);
+  }
+};
+createAdmin();
 
 //to handle invalid path
 app.use((req, res, next) => {

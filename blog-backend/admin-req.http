@@ -1,12 +1,24 @@
 ### Admin login
-POST http://localhost:4000/auth/login
+POST http://localhost:5000/admin-api/login
 Content-Type: application/json
 
 {
-  "email":"admin@mail.com",
-  "password":"admin"
+  "email":"ravi@gmail.com",
+  "password":"ravi"
 }
 
 ### Read all USERS & AUTHORS (email)
+GET http://localhost:5000/admin-api/admin/users
+Cookie: token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5ZmRlYjk1ZWZhMjc0MTViMDRkYWVlOSIsImVtYWlsIjoicmF2aUBnbWFpbC5jb20iLCJyb2xlIjoiQURNSU4iLCJmaXJzdE5hbWUiOiJSYXZpIiwiaWF0IjoxNzc4MzE2ODY3LCJleHAiOjE3NzgzNTI4Njd9.XZonKTv10VgA-F0ysYRqqA_uZUbLhM41PM0ahMGTTv4; Path=/; HttpOnly; Secure; SameSite=None
+
+
+### Read all articles
+GET http://localhost:5000/admin-api/articles
+Cookie: token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5ZmRlYjk1ZWZhMjc0MTViMDRkYWVlOSIsImVtYWlsIjoicmF2aUBnbWFpbC5jb20iLCJyb2xlIjoiQURNSU4iLCJmaXJzdE5hbWUiOiJSYXZpIiwiaWF0IjoxNzc4MzE2ODY3LCJleHAiOjE3NzgzNTI4Njd9.XZonKTv10VgA-F0ysYRqqA_uZUbLhM41PM0ahMGTTv4; Path=/; HttpOnly; Secure; SameSite=None
+
+
 
 ### Block or Activate User or Author
+PATCH http://localhost:5000/admin-api/admin/deactivate/69f8b670737fdd4c6cbd66d3
+Cookie: token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5ZmRlYjk1ZWZhMjc0MTViMDRkYWVlOSIsImVtYWlsIjoicmF2aUBnbWFpbC5jb20iLCJyb2xlIjoiQURNSU4iLCJmaXJzdE5hbWUiOiJSYXZpIiwiaWF0IjoxNzc4MzE2ODY3LCJleHAiOjE3NzgzNTI4Njd9.XZonKTv10VgA-F0ysYRqqA_uZUbLhM41PM0ahMGTTv4; Path=/; HttpOnly; Secure; SameSite=None
+

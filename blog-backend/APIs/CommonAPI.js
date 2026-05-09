@@ -142,7 +142,7 @@ commonApp.put(
       }
 
       // Compare current password with stored hashed password
-      const isMatch = await bcrypt.compare(
+      const isMatch = await compare(
         currentPassword,
         user.password
       );
