@@ -5,6 +5,7 @@ import Register from "./components/Register";
 import Login from "./components/Login";
 import UserProfile from "./components/UserProfile";
 import AuthorProfile from "./components/AuthorProfile";
+import AdminProfile from "./components/AdminProfile";
 import AuthorArticles from "./components/AuthorArticles";
 import EditArticle from "./components/EditArticle";
 import WriteArticles from "./components/WriteArticles";
@@ -73,6 +74,14 @@ function App() {
         {
           path: "unauthorized",
           element: <Unauthorized />,
+        },
+        {
+          path: "admin-profile",
+          element: (
+            <ProtectedRoute allowedRoles={["ADMIN"]}>
+              <AdminProfile />
+            </ProtectedRoute>
+          ),
         },
       ],
     },
