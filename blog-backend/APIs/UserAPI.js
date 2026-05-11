@@ -3,11 +3,20 @@ import { verifyToken } from "../middlewares/VerifyToken.js";
 import { ArticleModel } from "../models/ArticleModel.js";
 export const userApp = exp.Router();
 
-//Read articles of all authors
+
+// Public: Read articles of all authors (no authentication required)
+userApp.get("/public-articles", async (req, res) => {
+  try {
+    const articlesList = await ArticleModel.find({ isArticleActive: true });
+    res.status(200).json({ message: "articles", payload: articlesList });
+  } catch (err) {
+    res.status(500).json({ message: "Failed to fetch articles" });
+  }
+});
+
+//Read articles of all authors (USER only)
 userApp.get("/articles", verifyToken("USER"), async (req, res) => {
-  //read artcles
   const articlesList = await ArticleModel.find({ isArticleActive: true });
-  //send res
   res.status(200).json({ message: "artciles", payload: articlesList });
 });
 
