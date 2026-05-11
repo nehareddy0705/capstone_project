@@ -15,11 +15,10 @@ function Home(){
     const getArticles = async () => {
       setLoading(true);
       try {
-        //read articles of all authors
-        let res=await axios.get(`${BASE_URL}/user-api/articles`,{withCredentials:true})
-        //update articles state
-        if(res.status===200){
-          setArticles(await res.data.payload)
+        // Use public endpoint for articles
+        let res = await axios.get(`${BASE_URL}/user-api/public-articles`);
+        if (res.status === 200) {
+          setArticles(res.data.payload);
         }
       } catch (err) {
         setError(err.response?.data?.error || "Something went wrong");
@@ -27,7 +26,6 @@ function Home(){
         setLoading(false);
       }
     };
-
     getArticles();
   }, []);
 

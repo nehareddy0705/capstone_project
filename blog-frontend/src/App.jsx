@@ -13,6 +13,7 @@ import ArticleByID from "./components/ArticleByID";
 import { Toaster } from "react-hot-toast";
 import Unauthorized from "./components/Unauthorized";
 import ProtectedRoute from "./components/ProtectedRoute";
+import ForgotPassword from "./components/ForgotPassword";
 
 function App() {
   const routerObj = createBrowserRouter([
@@ -23,6 +24,10 @@ function App() {
         {
           path: "",
           element: <Home />,
+        },
+        {
+          path: "forgot-password",
+          element: <ForgotPassword />,
         },
         {
           path: "register",
