@@ -70,10 +70,19 @@ const createAdmin = async () => {
 };
 createAdmin();
 
-//to handle invalid path
-app.use((req, res, next) => {
-  console.log(req.url);
-  res.status(404).json({ message: `path ${req.url} is invalid` });
+
+// Serve frontend static files (adjust path if needed)
+import path from "path";
+import { fileURLToPath } from "url";
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+const frontendBuildPath = path.join(__dirname, "../blog-frontend/dist");
+app.use(exp.static(frontendBuildPath));
+
+// For any other route, serve index.html (for React Router)
+app.get("*", (req, res) => {
+  res.sendFile(path.join(frontendBuildPath, "index.html"));
 });
 
 //Error handling middleware

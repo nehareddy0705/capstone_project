@@ -6,7 +6,7 @@ import { pageWrapper } from "../styles/common";
 
 import { useEffect, useState } from 'react';
 import axios from "axios";
-
+const BASE_URL = import.meta.env.VITE_API_URL;
 function AdminProfile() {
   const currentUser = useAuth((state) => state.currentUser);
   const logout = useAuth((state) => state.logout);
@@ -39,7 +39,7 @@ function AdminProfile() {
 
   const deactivateUser = async (id) => {
     try {
-      await axios.patch(`/admin/deactivate/${id}`, {}, { withCredentials: true });
+      await axios.patch(`${BASE_URL}/admin/deactivate/${id}`, {}, { withCredentials: true });
       setUsers((prev) => prev.map(u => u._id === id ? { ...u, isUserActive: false } : u));
     } catch (err) {
       alert(err.response?.data?.message || "Failed to deactivate user");
