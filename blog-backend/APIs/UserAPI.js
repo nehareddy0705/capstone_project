@@ -14,11 +14,11 @@ userApp.get("/public-articles", async (req, res) => {
   }
 });
 
-//Read articles of all authors (USER only)
-userApp.get("/articles", verifyToken("USER"), async (req, res) => {
-  const articlesList = await ArticleModel.find({ isArticleActive: true });
-  res.status(200).json({ message: "artciles", payload: articlesList });
-});
+// //Read articles of all authors (USER only)
+// userApp.get("/articles", verifyToken("USER"), async (req, res) => {
+//   const articlesList = await ArticleModel.find({ isArticleActive: true });
+//   res.status(200).json({ message: "artciles", payload: articlesList });
+// });
 
 //Add comment to an article
 userApp.put("/articles", verifyToken("USER"), async (req, res) => {

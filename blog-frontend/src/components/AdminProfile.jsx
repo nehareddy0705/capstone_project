@@ -23,6 +23,7 @@ function AdminProfile() {
         const res = await axios.get("/admin/users", { withCredentials: true });
         setUsers(Array.isArray(res.data.data) ? res.data.data : []);
       } catch (err) {
+        console.log(err)
         setUsers([]);
         setError(err.response?.data?.message || "Failed to fetch users");
       }
