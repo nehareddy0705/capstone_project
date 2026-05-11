@@ -20,7 +20,7 @@ function AdminProfile() {
       setLoading(true);
       setError("");
       try {
-        const res = await axios.get("/admin/users", { withCredentials: true });
+        const res = await axios.get(`${BASE_URL}/admin/users`, { withCredentials: true });
         setUsers(Array.isArray(res.data.data) ? res.data.data : []);
       } catch (err) {
         console.log(err)
