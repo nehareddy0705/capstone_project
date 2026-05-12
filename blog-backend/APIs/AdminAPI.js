@@ -122,6 +122,43 @@ adminApp.patch(
   }
 );
 
+// activate any user/author
+adminApp.patch(
+  "/admin/activate/:id",
+  verifyToken("ADMIN"),
+  async (req, res) => {
+    try {
+      const { id } = req.params;
+
+      const user = await UserModel.findById(id);
+
+      if (!user) {
+        return res.status(404).json({
+          message: "User not found"
+        });
+      }
+
+      if (user.role === "ADMIN") {
+        return res.status(403).json({
+          message: "Admin cannot be activated"
+        });
+      }
+
+      user.isUserActive = true;
+      await user.save();
+
+      return res.status(200).json({
+        message: "User activated successfully"
+      });
+
+    } catch (error) {
+      return res.status(500).json({
+        message: error.message
+      });
+    }
+  }
+);
+
 //logout
 adminApp.get("/logout", (req, res) => {
   //delete token from cookie storage

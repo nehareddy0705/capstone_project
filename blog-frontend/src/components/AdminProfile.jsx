@@ -38,12 +38,22 @@ function AdminProfile() {
     navigate("/login");
   };
 
+
   const deactivateUser = async (id) => {
     try {
       await axios.patch(`${BASE_URL}/admin-api/admin/deactivate/${id}`, {}, { withCredentials: true });
       setUsers((prev) => prev.map(u => u._id === id ? { ...u, isUserActive: false } : u));
     } catch (err) {
       alert(err.response?.data?.message || "Failed to deactivate user");
+    }
+  };
+
+  const activateUser = async (id) => {
+    try {
+      await axios.patch(`${BASE_URL}/admin-api/admin/activate/${id}`, {}, { withCredentials: true });
+      setUsers((prev) => prev.map(u => u._id === id ? { ...u, isUserActive: true } : u));
+    } catch (err) {
+      alert(err.response?.data?.message || "Failed to activate user");
     }
   };
 
@@ -115,7 +125,13 @@ function AdminProfile() {
                         Deactivate
                       </button>
                     ) : (
-                      <span className="text-gray-400 text-xs">Deactivated</span>
+                      <button
+                        className="bg-green-500 text-white px-3 py-1 rounded hover:bg-green-700 text-xs"
+                        onClick={() => activateUser(user._id)}
+                        disabled={user.role === "ADMIN"}
+                      >
+                        Activate
+                      </button>
                     )}
                   </td>
                 </tr>
