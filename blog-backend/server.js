@@ -81,10 +81,9 @@ const frontendBuildPath = path.join(__dirname, "../blog-frontend/dist");
 app.use(exp.static(frontendBuildPath));
 
 // For any other route, serve index.html (for React Router)
-app.get("*", (req, res) => {
+app.use((req, res) => {
   res.sendFile(path.join(frontendBuildPath, "index.html"));
 });
-
 //Error handling middleware
 app.use((err, req, res, next) => {
   console.log("error is ",err)
