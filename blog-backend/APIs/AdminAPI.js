@@ -10,12 +10,16 @@ export const adminApp = exp.Router();
 
 //login for admin
 adminApp.post("/login", async (req, res) => {
-   const { email, password } = req.body;
+  const { email, password } = req.body;
   //find user by email
   const user = await UserModel.findOne({ email: email });
-  //if use not found
+  //if user not found
   if (!user) {
     return res.status(400).json({ message: "Invalid email" });
+  }
+  // block login if user is deactivated
+  if (user.isUserActive === false) {
+    return res.status(403).json({ message: "Your account has been deactivated. Please contact admin." });
   }
   //compare password
   const isMatched = await compare(password, user.password);
