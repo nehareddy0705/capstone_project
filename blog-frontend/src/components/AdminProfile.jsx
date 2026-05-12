@@ -21,7 +21,7 @@ function AdminProfile() {
       setLoading(true);
       setError("");
       try {
-        const res = await axios.get(`${BASE_URL}/admin/users`, { withCredentials: true });
+        const res = await axios.get(`${BASE_URL}/admin-api/admin/users`, { withCredentials: true });
         setUsers(Array.isArray(res.data.data) ? res.data.data : []);
       } catch (err) {
         console.log(err)
@@ -40,7 +40,7 @@ function AdminProfile() {
 
   const deactivateUser = async (id) => {
     try {
-      await axios.patch(`${BASE_URL}/admin/deactivate/${id}`, {}, { withCredentials: true });
+      await axios.patch(`${BASE_URL}/admin-api/admin/deactivate/${id}`, {}, { withCredentials: true });
       setUsers((prev) => prev.map(u => u._id === id ? { ...u, isUserActive: false } : u));
     } catch (err) {
       alert(err.response?.data?.message || "Failed to deactivate user");
