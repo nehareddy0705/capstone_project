@@ -67,6 +67,11 @@ authorApp.patch("/articles", verifyToken("AUTHOR"), async (req, res) => {
   const { articleId, isArticleActive } = req.body;
   //get article by id
   const articleOfDB = await ArticleModel.findOne({ _id: articleId, author: authorIdOfToken });
+  
+  if (!articleOfDB) {
+    return res.status(404).json({ message: "Article not found or you are not authorized" });
+  }
+
   //check status
   if (isArticleActive === articleOfDB.isArticleActive) {
     return res.status(200).json({ message: "Article already in the same state" });
@@ -75,5 +80,5 @@ authorApp.patch("/articles", verifyToken("AUTHOR"), async (req, res) => {
   articleOfDB.isArticleActive = isArticleActive;
   await articleOfDB.save();
   //SEND RES
-  res.status(200).json({ message: "Artcile modified", payload: articleOfDB });
+  res.status(200).json({ message: "Article modified", payload: articleOfDB });
 });

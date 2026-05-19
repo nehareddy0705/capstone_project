@@ -1,16 +1,73 @@
-# React + Vite
+# Blog Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+React client for the blog application. Users browse articles, authors publish content, and admins manage the platform. Connects to [blog-backend](../blog-backend) with cookie-based sessions.
 
-Currently, two official plugins are available:
+## Tech stack
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+React 19, Vite 8, React Router 7, Zustand, Axios, Tailwind CSS 4, React Hook Form, React Hot Toast.
 
-## React Compiler
+## Features
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- **Public** — Home, articles, register, login, forgot password
+- **User** — Profile and comments (`USER`)
+- **Author** — Dashboard, write/edit articles (`AUTHOR`)
+- **Admin** — User and article management (`ADMIN`)
+- **Auth** — Role-based routes; session restored on page load
 
-## Expanding the ESLint configuration
+## Prerequisites
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+Node.js 18+ and a running [blog-backend](../blog-backend).
+
+## Setup
+
+```bash
+npm install
+```
+
+Create `.env`:
+
+```env
+VITE_API_URL=http://localhost:3000
+```
+
+```bash
+npm run dev      # http://localhost:5000
+npm run build
+npm run preview
+npm run lint
+```
+
+Point `VITE_API_URL` at your API (no trailing slash). Backend CORS allows `http://localhost:5000` for local dev.
+
+## Scripts
+
+| Command | Description |
+|---------|-------------|
+| `npm run dev` | Dev server with HMR |
+| `npm run build` | Production build |
+| `npm run preview` | Preview build |
+| `npm run lint` | ESLint |
+
+## Main routes
+
+| Path | Access |
+|------|--------|
+| `/` | Public — home |
+| `/login`, `/register`, `/forgot-password` | Public |
+| `/article/:id` | Public |
+| `/user-profile` | `USER` |
+| `/author-profile`, `.../write-article` | `AUTHOR` |
+| `/edit-article` | Author |
+| `/admin-profile` | `ADMIN` |
+| `/unauthorized` | Wrong role |
+
+## Structure
+
+```
+src/
+├── App.jsx              # Routes
+├── store/authStore.js   # Login, logout, checkAuth
+└── components/          # Pages, Header, Footer
+```
+
+Ensure the backend is running and `VITE_API_URL` matches before testing login or protected routes.
