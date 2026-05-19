@@ -82,7 +82,7 @@ function ArticleByID() {
 
     try {
       const res = await axios.patch(
-        `${BASE_URL}/articles`,
+        `${BASE_URL}/author-api/articles`,
         { articleId: article._id, isArticleActive: newStatus },
         { withCredentials: true },
       );
